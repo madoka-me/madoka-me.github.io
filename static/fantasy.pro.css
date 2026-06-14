@@ -1,0 +1,223 @@
+@charset "UTF-8";
+
+/* ----
+
+# Fantasy Theme Pro
+# By: Dreamer-Paul
+# Last Update: 2021.3.3
+
+一个优美梦幻的动漫风 Typecho 博客主题。
+
+本代码为奇趣保罗原创，并遵守 MIT 开源协议。欢迎访问我的博客：https://paugram.com
+
+---- */
+
+body.onload main{ opacity: .6 }
+
+/* - 摘要模式 */
+.with-image{
+    margin-left: 6.5em;
+    position: relative;
+    margin-bottom: 3em;
+}
+
+.with-image .item-image{
+    top: 0;
+    left: -6.5em;
+    width: 5em;
+    height: 5em;
+    position: absolute;
+    border-radius: 66%;
+    background: center/cover;
+    transition: opacity .3s;
+}
+.with-image:hover .item-image{ opacity: .6 }
+
+@media screen and (max-width: 600px){
+    .with-image{ margin-left: 0 }
+    .with-image .item-image{
+        width: 100%;
+        height: 10em;
+        position: static;
+        margin-bottom: 1em;
+        border-radius: 1em;
+    }
+}
+
+/* - 卡片模式 */
+.post-card-grid{
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+}
+
+.post-card{
+    overflow: hidden;
+    background: #fff;
+    background: var(--light-bg);
+    border-radius: 1em;
+    transition: transform .3s;
+}
+
+.post-card:hover{
+    transform: translateY(-.5em);
+}
+
+@media screen and (max-width: 600px){
+    .post-card-grid{
+        margin: 0 1.25em;
+    }
+}
+
+.post-card .card-img{
+    position: relative;
+    padding-bottom: 70%;
+    background: center/cover;
+}
+
+.post-card .card-info{ padding: 1em }
+.post-card .card-date{
+    display: block;
+    color: #ffa9be;
+    font-size: .85em;
+    margin-bottom: .5em;
+}
+
+.post-card:hover p{ opacity: 1 }
+
+.post-card p{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    color: #fff;
+    font-size: .85em;
+    padding: 1.5em;
+    line-height: 2;
+    position: absolute;
+    transition: opacity .3s;
+    background: rgba(0, 0, 0, .5);
+}
+
+.post-card h3{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: opacity .3s;
+}
+
+/* - 时间轴 */
+.timeline{
+    line-height: 1.8;
+    margin-left: 4em;
+    padding-left: 2em;
+    border-left: 2px solid #ddd;
+}
+.timeline a{ color: #fff }
+
+.timeline-item{
+    margin: 1em 0;
+    position: relative;
+}
+
+.timeline-month{
+    width: 5em;
+    color: #fff;
+    left: -4.5em;
+    text-align: center;
+    position: relative;
+    border-radius: 1em;
+    background: #777790;
+    padding: .5em .75em;
+    display: inline-block;
+}
+
+.timeline .date{
+    left: -6em;
+    padding: .5em 0;
+    position: absolute;
+}
+.timeline .title{
+    color: #fff;
+    position: relative;
+    border-radius: 1em;
+    background: #ff9fab;
+    padding: .5em .75em;
+    display: inline-block;
+}
+.timeline .title:before{
+    content: '';
+    left: -1.25em;
+    position: absolute;
+    border: .75em solid transparent;
+    border-right-color: #ff9fab;
+}
+
+
+.timeline:nth-child(1n) .title{ background: #ff8b46 }
+.timeline:nth-child(2n) .title{ background: #ffc71d }
+.timeline:nth-child(3n) .title{ background: #d4f00f }
+.timeline:nth-child(4n) .title{ background: #b1c6ff }
+.timeline:nth-child(5n) .title{ background: #dcb5ff }
+.timeline:nth-child(6n) .title{ background: #ff9fab }
+.timeline:nth-child(7n) .title{ background: #eae489 }
+.timeline:nth-child(8n) .title{ background: #acf0dc }
+.timeline:nth-child(9n) .title{ background: #f9dba7 }
+.timeline:nth-child(10n) .title{ background: #a9d6f6 }
+.timeline:nth-child(11n) .title{ background: #b5e8a4 }
+.timeline:nth-child(12n) .title{ background: #ffb7a5 }
+
+.timeline:nth-child(1n) .title:before{ border-right-color: #ff8b46 }
+.timeline:nth-child(2n) .title:before{ border-right-color: #ffc71d }
+.timeline:nth-child(3n) .title:before{ border-right-color: #d4f00f }
+.timeline:nth-child(4n) .title:before{ border-right-color: #b1c6ff }
+.timeline:nth-child(5n) .title:before{ border-right-color: #dcb5ff }
+.timeline:nth-child(6n) .title:before{ border-right-color: #ff9fab }
+.timeline:nth-child(7n) .title:before{ border-right-color: #eae489 }
+.timeline:nth-child(8n) .title:before{ border-right-color: #acf0dc }
+.timeline:nth-child(9n) .title:before{ border-right-color: #f9dba7 }
+.timeline:nth-child(10n) .title:before{ border-right-color: #a9d6f6 }
+.timeline:nth-child(11n) .title:before{ border-right-color: #b5e8a4 }
+.timeline:nth-child(12n) .title:before{ border-right-color: #ffb7a5 }
+
+/* - 归档 */
+.archives-head{ margin: 2em 0 }
+
+/* - 友链 */
+.friends-link{
+    float: left;
+    height: 5em;
+    display: block;
+    width: 33.33333%;
+    position: relative;
+    margin-bottom: 1em;
+    padding: .5em .5em .5em 5.5em;
+}
+.friends-link:hover{ background: #f5f5f5 }
+
+.friends-link img{
+    top: .5em;
+    left: .5em;
+    max-width: 4em;
+    position: absolute;
+    border-radius: 66%;
+}
+.friends-link .link-name{
+    color: #777790;
+    font-size: 1.2em;
+    margin-bottom: .25em;
+}
+.friends-link .link-desc{
+    color: #bbb;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 600px){
+    .friends-link{ width: 50% }
+}
+@media screen and (max-width: 450px){
+    .friends-link{ width: 100% }
+}

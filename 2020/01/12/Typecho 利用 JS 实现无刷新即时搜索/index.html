@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html class="font-auto" lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Typecho 利用 JS 实现无刷新即时搜索 - Madoka's Blog</title>
+
+    <link rel="icon" href="/favicon.jpg" sizes="192x192"/>
+
+    <link href="/static/kico.css" rel="stylesheet"/>
+    <link href="/static/fantasy.css" rel="stylesheet"/>
+    <link href="/static/fantasy.pro.css" rel="stylesheet"/>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.19.0/js/md5.min.js"></script>
+
+
+
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
+
+
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body>
+<aside>
+    <nav class="side-nav">
+        <div class="nav-item">
+            <a href="/">首页</a>
+        </div>
+        <div class="nav-item has-child">
+            <a>分类</a>
+            <div class="sub-menu">
+                <div class="wrapper">
+                    
+                    <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">默认分类</a>
+                    
+                    <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/%E6%97%A5%E5%B8%B8%E7%9B%B8%E5%85%B3/">日常相关</a>
+                    
+                    <a href="/categories/%E6%97%A5%E5%B8%B8%E7%9B%B8%E5%85%B3/">日常相关</a>
+                    
+                    <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/Android%E7%9B%B8%E5%85%B3/">Android相关</a>
+                    
+                    <a href="/categories/%E7%9B%B8%E6%9C%BA%E7%9B%B8%E5%85%B3/">相机相关</a>
+                    
+                    <a href="/categories/Android%E7%9B%B8%E5%85%B3/">Android相关</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="nav-item">
+            <a href="/100/index.html">追番</a>
+        </div>
+        
+        
+        
+        
+        
+        <div class="nav-item">
+            <a href="/105/index.html">搜索</a>
+        </div>
+        
+        
+        
+        <div class="nav-item">
+            <a href="/about/index.html">关于</a>
+        </div>
+        
+        
+        
+        <div class="nav-item">
+            <a href="/Archives/index.html">归档</a>
+        </div>
+        
+        
+        
+        <div class="nav-item">
+            <a href="/message/index.html">留言</a>
+        </div>
+        
+        
+        
+        <div class="nav-item">
+            <a href="/links/index.html">友链</a>
+        </div>
+        
+        
+
+    </nav> 
+    <nav class="side-action">
+        <div class="search-btn"></div>
+    </nav>
+    <div class="side-window">
+        <div class="side-wrap">
+            <form class="search-form" method="get" action="/search/">
+                <input type="text" name="q" placeholder="搜索什么？">
+            </form>
+            <div class="side-category color-bar">
+                
+                <a href="/tags/Android/">Android</a>
+                
+                <a href="/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+                
+                <a href="/tags/%E7%9B%B8%E6%9C%BA/">相机</a>
+                
+                <a href="/tags/Typecho/">Typecho</a>
+                
+                <a href="/tags/JavaSrcipt/">JavaSrcipt</a>
+                
+                <a href="/tags/%E6%97%A0%E5%88%B7%E6%96%B0%E6%90%9C%E7%B4%A2/">无刷新搜索</a>
+                
+                <a href="/tags/%E5%8D%B3%E6%97%B6%E6%90%9C%E7%B4%A2/">即时搜索</a>
+                
+                <a href="/tags/%E5%8D%B3%E6%97%B6%E9%9A%8F%E6%83%B3/">即时随想</a>
+                
+                <a href="/tags/%E5%88%B7%E6%96%B0%E7%8E%87/">刷新率</a>
+                
+                <a href="/tags/iOS/">iOS</a>
+                
+                <a href="/tags/%E5%85%A8%E9%9D%A2%E5%B1%8F%E6%89%8B%E5%8A%BF/">全面屏手势</a>
+                
+                <a href="/tags/%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/">系统相关</a>
+                
+                <a href="/tags/Minecraft/">Minecraft</a>
+                
+                <a href="/tags/Google-Play/">Google Play</a>
+                
+                <a href="/tags/%E6%AD%A3%E7%89%88/">正版</a>
+                
+                <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C/">我的世界</a>
+                
+                <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C%E5%9B%BD%E9%99%85%E7%89%88/">我的世界国际版</a>
+                
+                <a href="/tags/DNS/">DNS</a>
+                
+                <a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+                
+                <a href="/tags/%E6%95%B0%E7%A0%81/">数码</a>
+                
+                <a href="/tags/%E6%91%84%E5%BD%B1/">摄影</a>
+                
+                <a href="/tags/Safari/">Safari</a>
+                
+                <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/">移动端</a>
+                
+                <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+                
+                <a href="/tags/%E5%B0%8F%E6%8A%80%E5%B7%A7/">小技巧</a>
+                
+                <a href="/tags/CMOS/">CMOS</a>
+                
+                <a href="/tags/FastClick/">FastClick</a>
+                
+                <a href="/tags/%E6%B6%88%E9%99%A4%E7%82%B9%E5%87%BB%E5%BB%B6%E8%BF%9F/">消除点击延迟</a>
+                
+                <a href="/tags/%E7%BE%8E%E5%8C%96/">美化</a>
+                
+            </div>
+        </div>
+    </div>
+</aside>
+<header>
+    <div class="toggle"></div>
+    <div class="wrap">
+        <h1 class="headline">
+            <a href="/">Madoka's Blog</a>
+        </h1>
+
+    </div>
+</header>
+
+<main>
+    <div class="wrap">
+        <section class="board">
+            <div class="post-title">
+                <h2>Typecho 利用 JS 实现无刷新即时搜索</h2>
+                <div class="post-meta">
+                    <time class="date">2020-01-12</time>
+
+                    <span class="category">
+                        
+                            <a href="/categories/%E9%BB%98%E8%AE%A4%E5%88%86%E7%B1%BB/">默认分类</a>
+                        
+                    </span>
+
+                    <span class="user">まどか（Madoka）</span>
+                </div>
+            </div>
+            <article class="post-content">
+                <p>灵感来源于：<a target="_blank" rel="noopener" href="https://zhangtianzhuang.github.io/2019/03/04/articles-search">这里</a>（<del>本篇内容基本照抄原文</del>）</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>通过 JS 调用 XMLHttpRequest() 实现与 Typecho Feed 数据的交互，从而实现(无刷新)即时搜索。简洁、轻量、无需插件&#x2F;数据库。</p>
+<span id="more"></span>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><strong>友情提示：使用前务必先开启伪静态!（方法:登陆后台—设置—永久链接—是否使用地址重写功能—启用）</strong>（当然，其实不开启也可以，只要把下文中的”&#x2F;feed”改成你的 Feed 地址即可）</p>
+<blockquote>
+<p>HTML部分</p>
+</blockquote>
+<p>这窜代码用于调用Google字体</p>
+<pre><code class="language-html"><link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"></code></pre>
+<p>这窜代码是搜索栏HTML部分</p>
+<pre><code class="language-html"><div class="search">
+    <i class="material-icons search-icon search-start">search</i>
+    <input type="text" class="search-input" placeholder="Searching..." />
+    <i class="material-icons search-icon search-clear">clear</i>
+	<div class="search-results"></div>
+</div></code></pre>
+<p>上面的clear是一个清除输入框内容的图标，search-results是用于输出匹配到的结果的板块；</p>
+<blockquote>
+<p>CSS部分</p>
+</blockquote>
+<pre><code class="language-css">.search {
+    position: relative;
+    height: 30px;
+    text-align: right;
+    line-height: 30px;
+    padding-right: 10px;
+}
+
+.search .search-icon {
+    float: right;
+    height: 100%;
+    margin: 0 10px;
+    line-height: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.search .search-input {
+    float: right;
+    width: 30%;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.search .search-clear {
+    display: none;
+}
+
+.search .search-results {
+    display: block;
+    z-index: 1000;
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    width: 50%;
+    max-height: 400px;
+    overflow: auto;
+    text-align: left;
+    border-radius: 5px;
+    background: #ccc;
+    box-shadow: 0 .3rem .5rem #333;
+}
+
+.search .search-results .result-item {
+    background: aqua;
+    color: #000;
+    margin: 5px;
+    padding: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}</code></pre>
+<p>样式可以自行随意调整，最终感觉好看就OK；</p>
+<blockquote>
+<p>JavaScript部分</p>
+</blockquote>
+<p>这是搜索功能的核心代码；</p>
+<p>下面附上代码与注释：</p>
+<pre><code class="language-javaScript">// 获取搜索框、搜索按钮、清空搜索、结果输出对应的元素
+var searchBtn = document.querySelector('.search-start');
+var searchClear = document.querySelector('.search-clear');
+var searchInput = document.querySelector('.search-input');
+var searchResults = document.querySelector('.search-results');
+
+// 申明保存文章的标题、链接、内容的数组变量
+var searchValue = '',
+    arrItems = [],
+    arrContents = [],
+    arrLinks = [],
+    arrTitles = [],
+    arrResults = [],
+    indexItem = [],
+    itemLength = 0;
+var tmpDiv = document.createElement('div');
+tmpDiv.className = 'result-item';
+
+// ajax 的兼容写法
+var xhr = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        xml = xhr.responseXML;
+        arrItems = xml.getElementsByTagName('item');
+        itemLength = arrItems.length;
+        
+        // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
+        // 同时过滤掉 HTML 标签
+        for (i = 0; i < itemLength; i++) {
+            arrContents[i] = arrItems[i].getElementsByTagName('description')[0].
+                childNodes[0].nodeValue.replace(/<.*?>/g, '');
+            arrLinks[i] = arrItems[i].getElementsByTagName('link')[0].
+                childNodes[0].nodeValue.replace(/<.*?>/g, '');
+            arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
+                childNodes[0].nodeValue.replace(/<.*?>/g, '');
+        }
+    }
+}
+
+// 开始获取根目录下 feed.xml 文件内的数据
+xhr.open('get', '/feed', true);
+xhr.send();
+
+searchBtn.onclick = searchConfirm;
+
+// 清空按钮点击函数
+searchClear.onclick = function(){
+    searchInput.value = '';
+    searchResults.style.display = 'none';
+    searchClear.style.display = 'none';
+}
+
+// 输入框内容变化后就开始匹配，可以不用点按钮
+// 经测试，onkeydown, onchange 等方法效果不太理想，
+// 存在输入延迟等问题，最后发现触发 input 事件最理想，
+// 并且可以处理中文输入法拼写的变化
+searchInput.oninput = function () {
+    setTimeout(searchConfirm, 0);
+}
+searchInput.onfocus = function () {
+    searchResults.style.display = 'block';
+}
+
+function searchConfirm() {
+    if (searchInput.value == '') {
+        searchResults.style.display = 'none';
+        searchClear.style.display = 'none';
+    } else if (searchInput.value.search(/^\s+$/) >= 0) {
+        // 检测输入值全是空白的情况
+        searchInit();
+        var itemDiv = tmpDiv.cloneNode(true);
+        itemDiv.innerText = '请输入有效内容...';
+        searchResults.appendChild(itemDiv);
+    } else {
+        // 合法输入值的情况
+        searchInit();
+        searchValue = searchInput.value;
+        // 在标题、内容中查找
+        searchMatching(arrTitles, arrContents, searchValue);
+    }
+}
+
+// 每次搜索完成后的初始化
+function searchInit() {
+    arrResults = [];
+    indexItem = [];
+    searchResults.innerHTML = '';
+    searchResults.style.display = 'block';
+    searchClear.style.display = 'block';
+}
+
+function searchMatching(arr1, arr2, input) {
+    // 忽略输入大小写
+    input = new RegExp(input, 'i');
+    // 在所有文章标题、内容中匹配查询值
+    for (i = 0; i < itemLength; i++) {
+        if (arr1[i].search(input) !== -1 || arr2[i].search(input) !== -1) {
+            // 优先搜索标题
+            if (arr1[i].search(input) !== -1) {
+                var arr = arr1;
+            } else {
+                var arr = arr2;
+            }
+            indexItem.push(i);  // 保存匹配值的索引
+            var indexContent = arr[i].search(input);
+            // 此时 input 为 RegExp 格式 /input/i，转换为原 input 字符串长度
+            var l = input.toString().length - 3;
+            var step = 10;
+            
+            // 将匹配到内容的地方进行黄色标记，并包括周围一定数量的文本
+            arrResults.push(arr[i].slice(indexContent - step, indexContent) +
+                '<mark>' + arr[i].slice(indexContent, indexContent + l) + '</mark>' +
+                arr[i].slice(indexContent + l, indexContent + l + step));
+        }
+    }
+
+    // 输出总共匹配到的数目
+    var totalDiv = tmpDiv.cloneNode(true);
+    totalDiv.innerHTML = '总匹配：<b>' + indexItem.length + '</b> 项';
+    searchResults.appendChild(totalDiv);
+
+    // 未匹配到内容的情况
+    if (indexItem.length == 0) {
+        var itemDiv = tmpDiv.cloneNode(true);
+        itemDiv.innerText = '未匹配到内容...';
+        searchResults.appendChild(itemDiv);
+    }
+
+    // 将所有匹配内容进行组合
+    for (i = 0; i < arrResults.length; i++) {
+        var itemDiv = tmpDiv.cloneNode(true);
+        itemDiv.innerHTML = '<b>《' + arrTitles[indexItem[i]] +
+            '》</b><hr />' + arrResults[i];
+        itemDiv.setAttribute('onclick', 'changeHref(arrLinks[indexItem[' + i + ']])');
+        searchResults.appendChild(itemDiv);
+    }
+}
+
+function changeHref(href) {
+
+    // 在当前页面点开链接的情况
+    location.href = href;
+
+    // 在新标签页面打开链接的代码，与上面二者只能取一个，自行决定
+    // window.open(href);
+}</code></pre>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>看一下最终效果：<img src="/usr/uploads/2020/02/138159777.png" alt="捕获.PNG"></p>
+
+            </article>
+
+            <section class="post-tags">
+                
+                    <a href="/tags/Typecho/">Typecho</a>
+                
+                    <a href="/tags/JavaSrcipt/">JavaSrcipt</a>
+                
+                    <a href="/tags/%E6%97%A0%E5%88%B7%E6%96%B0%E6%90%9C%E7%B4%A2/">无刷新搜索</a>
+                
+                    <a href="/tags/%E5%8D%B3%E6%97%B6%E6%90%9C%E7%B4%A2/">即时搜索</a>
+                
+            </section>
+
+        </section>
+        
+        <section class="board">
+            <div class="post-actions">
+                <a class="post-action likes" data-cid="2020/01/12/Typecho 利用 JS 实现无刷新即时搜索/">点赞<span class="likes-num">0</span></a>
+                <a class="post-action share">分享</a>
+                <a class="post-action donate">打赏</a>
+            </div>
+            <div class="post-windows">
+                <div class="post-window window-share">
+                    <h3>分享这篇文章</h3>
+                    <p class="qrcode"><img alt="文章二维码"/></p>
+                    <div class="content">
+                        <a title="复制链接" href="javascript:fantasy.copyToClipboard(window.location.href)">
+                            <i class="fa fa-link" style="background: #acacac"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="post-window window-donate">
+                    <h3>请我喝杯茶吧</h3>
+                    <div class="wrap">
+                        <div class="row center">
+                            <p>暂时未配置打赏信息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 评论区 -->
+        <section class="board">
+            <div class="comments" id="comments">
+                <h3>参与讨论</h3>
+
+                <div id="gitalk-container" data-gitalk-id="Typecho 利用 JS 实现无刷新即时搜索"></div>
+
+            </div>
+        </section>
+    </div>
+</main>
+
+
+<footer>
+    <div class="wrap mid">
+        <section class="foot-action">
+            <div class="to-top"></div>
+        </section>
+        <section class="foot-widget">
+            <div class="row">
+                
+                
+                    <div class="col-m-3">
+                        
+                            <h3>标签云：</h3>
+                            <div class="foot-tags">
+                                <div class="color-bar">
+                                    
+                                        <a href="/tags/Android/">Android</a>
+                                    
+                                        <a href="/tags/%E6%89%8B%E6%9C%BA/">手机</a>
+                                    
+                                        <a href="/tags/%E7%9B%B8%E6%9C%BA/">相机</a>
+                                    
+                                        <a href="/tags/Typecho/">Typecho</a>
+                                    
+                                        <a href="/tags/JavaSrcipt/">JavaSrcipt</a>
+                                    
+                                        <a href="/tags/%E6%97%A0%E5%88%B7%E6%96%B0%E6%90%9C%E7%B4%A2/">无刷新搜索</a>
+                                    
+                                        <a href="/tags/%E5%8D%B3%E6%97%B6%E6%90%9C%E7%B4%A2/">即时搜索</a>
+                                    
+                                        <a href="/tags/%E5%8D%B3%E6%97%B6%E9%9A%8F%E6%83%B3/">即时随想</a>
+                                    
+                                        <a href="/tags/%E5%88%B7%E6%96%B0%E7%8E%87/">刷新率</a>
+                                    
+                                        <a href="/tags/iOS/">iOS</a>
+                                    
+                                        <a href="/tags/%E5%85%A8%E9%9D%A2%E5%B1%8F%E6%89%8B%E5%8A%BF/">全面屏手势</a>
+                                    
+                                        <a href="/tags/%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/">系统相关</a>
+                                    
+                                        <a href="/tags/Minecraft/">Minecraft</a>
+                                    
+                                        <a href="/tags/Google-Play/">Google Play</a>
+                                    
+                                        <a href="/tags/%E6%AD%A3%E7%89%88/">正版</a>
+                                    
+                                        <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C/">我的世界</a>
+                                    
+                                        <a href="/tags/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C%E5%9B%BD%E9%99%85%E7%89%88/">我的世界国际版</a>
+                                    
+                                        <a href="/tags/DNS/">DNS</a>
+                                    
+                                        <a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/">互联网</a>
+                                    
+                                        <a href="/tags/%E6%95%B0%E7%A0%81/">数码</a>
+                                    
+                                </div>
+                            </div>
+                        
+                    </div>
+                
+                    <div class="col-m-3">
+                        
+                            <h3>站点信息：</h3>
+                            <ul class="clear" style="line-height: 2;">
+                                <li><i class="fa fa-angle-right"></i> 文章：25 篇</li>
+                                <li><i class="fa fa-angle-right"></i> 分类：6 个</li>
+                                <li><i class="fa fa-angle-right"></i> 页面：7 个</li>
+                                
+                                <li><i class="fa fa-angle-right"></i> 上次更新：2026.06.14</li>
+                            </ul>
+                        
+                    </div>
+                
+                    <div class="col-m-3">
+                        
+                            <h3>最近评论：</h3>
+                            <ul id="recent-comments-list" class="clear" style="line-height: 2;">
+                                <li><i class="fa fa-spinner fa-spin"></i> 正在加载评论...</li>
+                            </ul>
+                        
+                    </div>
+                
+                    <div class="col-m-3">
+                        
+                            <h3>时光机：</h3>
+                            <ul class="clear" style="line-height: 2;">
+                                
+                                
+                                    <li><a href="/archives/2026/06/"><i class="fa fa-angle-right"></i> 2026 年 06 月</a> (1)</li>
+                                
+                                    <li><a href="/archives/2022/02/"><i class="fa fa-angle-right"></i> 2022 年 02 月</a> (2)</li>
+                                
+                                    <li><a href="/archives/2022/01/"><i class="fa fa-angle-right"></i> 2022 年 01 月</a> (1)</li>
+                                
+                                    <li><a href="/archives/2021/12/"><i class="fa fa-angle-right"></i> 2021 年 12 月</a> (1)</li>
+                                
+                                    <li><a href="/archives/2021/10/"><i class="fa fa-angle-right"></i> 2021 年 10 月</a> (1)</li>
+                                
+                                    <li><a href="/archives/2021/08/"><i class="fa fa-angle-right"></i> 2021 年 08 月</a> (3)</li>
+                                
+                            </ul>
+                        
+                    </div>
+                
+            </div>
+        </section>
+        <section class="foot-copyright">
+            <div class="row">
+                <div class="col-m-6 left bottom to-center">
+                    <p class="foot-date">站点已萌萌哒存活了 <a>?</a> 天 <a>?</a> 小时 <a>?</a> 分 <a>?</a> 秒</p>
+                </div>
+                <div class="col-m-6 right bottom to-center">
+                    <p>&copy; 2026 <a href="/">Madoka's Blog</a>. 版权所有.</p>
+                    <p>Published With <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo.</a> Theme By <a href="https://github.com/Dreamer-Paul/Fantasy" target="_blank" rel="nofollow">Fantasy</a>.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<script src="/static/pjax.js"></script>
+<script src="/static/prism.js"></script>
+<script src="/static/kico.js"></script>
+<script src="/static/fantasy.js"></script>
+<script>var fantasy = new Fantasy_Theme({created: "2018/07/09 00:00:00"});</script>
+<script>
+    function applyRandomImages() {
+        document.querySelectorAll('[data-random-img="true"]').forEach(function(el) {
+            if (!el.style.backgroundImage) {
+                var rand = Math.floor(Math.random() * 6) + 1;
+                el.style.backgroundImage = "url('/static/img/article/" + rand + ".jpg')";
+            }
+        });
+    }
+    
+    function executeSearch() {
+        const resultsEl = document.getElementById('search-results');
+        if (!resultsEl) return;
+        const keyword = new URLSearchParams(window.location.search).get('q');
+        const keywordEl = document.getElementById('search-keyword');
+        if (keywordEl) keywordEl.innerText = keyword || '';
+        if(!keyword) {
+            resultsEl.innerHTML = '<p>请输入搜索关键字</p>';
+            return;
+        }
+        resultsEl.innerHTML = '<p>正在搜索中...</p>';
+        fetch('/search.xml')
+            .then(res => res.text())
+            .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+            .then(data => {
+                const posts = data.getElementsByTagName('entry');
+                let resultHtml = '';
+                let count = 0;
+                for (let i = 0; i < posts.length; i++) {
+                    const title = posts[i].getElementsByTagName('title')[0].textContent;
+                    const content = posts[i].getElementsByTagName('content')[0].textContent;
+                    const url = posts[i].getElementsByTagName('url')[0].textContent;
+                    if (title.toLowerCase().indexOf(keyword.toLowerCase()) > -1 || content.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+                        const randImg = Math.floor(Math.random() * 6) + 1;
+                        resultHtml += `
+                            <div class="post-card">
+                                <div class="card-img" style="background-image: url('/static/img/article/${randImg}.jpg')">
+                                    <a href="${url.startsWith('/') ? url : '/' + url}"><p>${content.substring(0, 66).replace(/<[^>]+>/g, '')}...</p></a>
+                                </div>
+                                <div class="card-info">
+                                    <h3 class="card-title"><a href="${url.startsWith('/') ? url : '/' + url}">${title}</a></h3>
+                                </div>
+                            </div>
+                        `;
+                        count++;
+                    }
+                }
+                if (count === 0) {
+                    resultsEl.innerHTML = '<p>没有找到相关文章...</p>';
+                } else {
+                    resultsEl.innerHTML = resultHtml;
+                }
+            });
+    }
+
+    function initCustomScripts() {
+        applyRandomImages();
+        executeSearch();
+        const gitalkContainer = document.getElementById('gitalk-container');
+        if (gitalkContainer && typeof initGitalk === 'function') {
+            const gitalkId = gitalkContainer.getAttribute('data-gitalk-id');
+            if (gitalkId) initGitalk(gitalkId);
+        }
+        if (typeof loadRecentComments === 'function') loadRecentComments();
+    }
+
+    function loadRecentComments() {
+        
+        const list = document.getElementById('recent-comments-list');
+        if (!list || list.getAttribute('data-loaded')) return;
+        fetch('https://api.github.com/repos/madoka-me/madoka-me.github.io/issues/comments?sort=created&direction=desc&per_page=5', {
+            headers: { Accept: "application/vnd.github.v3.html+json" }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('API Rate Limit');
+            return res.json();
+        })
+        .then(comments => {
+            let html = '';
+            comments.forEach(c => {
+                const rawText = c.body_text || c.body.replace(/<[^>]+>/g, '');
+                const text = rawText.length > 20 ? rawText.substring(0, 20) + '...' : rawText;
+                html += `
+                <li style="display:flex; align-items:center; margin-bottom:8px;">
+                    <img src="${c.user.avatar_url}" style="width:24px; height:24px; border-radius:50%; margin-right:8px;">
+                    <a href="${c.html_url}" target="_blank" style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#bbb; text-decoration:none;">
+                        <span style="color:#ddd">${c.user.login}</span>: ${text}
+                    </a>
+                </li>`;
+            });
+            if (html === '') html = '<li>暂无评论</li>';
+            list.innerHTML = html;
+            list.setAttribute('data-loaded', 'true');
+        })
+        .catch(err => {
+            list.innerHTML = '<li><i class="fa fa-exclamation-triangle"></i> 加载失败 (可能是 API 限制)</li>';
+        });
+        
+    }
+
+    
+    function initGitalk(gitalkId) {
+        const container = document.getElementById('gitalk-container');
+        if (container) {
+            container.innerHTML = '';
+            var gitalk = new Gitalk({
+                clientID: 'Ov23lio8dJZpjAej9hVy',
+                clientSecret: '79ed716c9f7da52c9a167ba6a8f3254d75992068',
+                repo: 'madoka-me.github.io',
+                owner: 'madoka-me',
+                admin: ["madoka-me"],
+                id: md5(gitalkId),
+                distractionFreeMode: false
+            });
+            gitalk.render('gitalk-container');
+        }
+    }
+    
+
+    // Initial load
+    initCustomScripts();
+    
+    // PJAX load
+    document.addEventListener('pjax:complete', initCustomScripts);
+</script>
+</body>
+</html>
