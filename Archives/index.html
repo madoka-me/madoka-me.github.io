@@ -52,7 +52,21 @@
         
         
         <div class="nav-item">
-            <a href="/105/index.html">搜索</a>
+            <a href="/Archives/index.html">归档</a>
+        </div>
+        
+        
+        
+        <div class="nav-item">
+            <a href="/about/index.html">关于</a>
+        </div>
+        
+        
+        
+        
+        
+        <div class="nav-item">
+            <a href="/message/index.html">留言</a>
         </div>
         
         
@@ -64,27 +78,13 @@
         
         
         <div class="nav-item">
-            <a href="/Archives/index.html">归档</a>
+            <a href="/105/index.html">搜索</a>
         </div>
-        
-        
-        
-        <div class="nav-item">
-            <a href="/message/index.html">留言</a>
-        </div>
-        
-        
         
         
         
         <div class="nav-item">
             <a href="/links/index.html">友链</a>
-        </div>
-        
-        
-        
-        <div class="nav-item">
-            <a href="/about/index.html">关于</a>
         </div>
         
         
@@ -130,9 +130,9 @@
                 
                 <a href="/tags/%E6%89%8B%E6%9C%BA/">手机</a>
                 
-                <a href="/tags/CMOS/">CMOS</a>
-                
                 <a href="/tags/%E6%91%84%E5%BD%B1/">摄影</a>
+                
+                <a href="/tags/CMOS/">CMOS</a>
                 
                 <a href="/tags/%E7%BE%8E%E5%8C%96/">美化</a>
                 
@@ -292,9 +292,9 @@
                                     
                                         <a href="/tags/%E6%89%8B%E6%9C%BA/">手机</a>
                                     
-                                        <a href="/tags/CMOS/">CMOS</a>
-                                    
                                         <a href="/tags/%E6%91%84%E5%BD%B1/">摄影</a>
+                                    
+                                        <a href="/tags/CMOS/">CMOS</a>
                                     
                                         <a href="/tags/%E7%BE%8E%E5%8C%96/">美化</a>
                                     
@@ -304,6 +304,174 @@
                     </div>
                 
                     <div class="col-m-3">
+                        
+                            <h3>站点信息：</h3>
+                            <ul class="clear">
+                                <li>文章：21 篇</li>
+                                <li>分类：6 个</li>
+                                <li>页面：7 个</li>
+                                
+                                <li>上次更新：2026.06.16</li>
+                            </ul>
+                        
+                    </div>
+                
+            </div>
+        </section>
+        <section class="foot-copyright">
+            <div class="row">
+                <div class="col-m-6 left bottom to-center">
+                    <p class="foot-date">站点已萌萌哒存活了 <a>?</a> 天 <a>?</a> 小时 <a>?</a> 分 <a>?</a> 秒</p>
+                </div>
+                <div class="col-m-6 right bottom to-center">
+                    <p>&copy; 2026 <a href="/">Madoka's Blog</a>. 版权所有.</p>
+                    <p>Published With <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo.</a> Theme By <a href="https://github.com/Dreamer-Paul/Fantasy" target="_blank" rel="nofollow">Fantasy</a>.</p>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<script src="/static/pjax.js"></script>
+<script src="/static/prism.js"></script>
+<script src="/static/kico.js"></script>
+<script src="/static/fantasy.js"></script>
+<script>var fantasy = new Fantasy_Theme({created: "2018/07/09 00:00:00"});</script>
+<script>
+    function applyRandomImages() {
+        document.querySelectorAll('[data-random-img="true"]').forEach(function(el) {
+            if (!el.style.backgroundImage) {
+                var rand = Math.floor(Math.random() * 6) + 1;
+                el.style.backgroundImage = "url('/static/img/article/" + rand + ".jpg')";
+            }
+        });
+    }
+    
+    function executeSearch() {
+        const resultsEl = document.getElementById('search-results');
+        if (!resultsEl) return;
+        const keyword = new URLSearchParams(window.location.search).get('q');
+        const keywordEl = document.getElementById('search-keyword');
+        if (keywordEl) keywordEl.innerText = keyword || '';
+        if(!keyword) {
+            resultsEl.innerHTML = '<p>请输入搜索关键字</p>';
+            return;
+        }
+        resultsEl.innerHTML = '<p>正在搜索中...</p>';
+        fetch('/search.xml')
+            .then(res => res.text())
+            .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+            .then(data => {
+                const posts = data.getElementsByTagName('entry');
+                let resultHtml = '';
+                let count = 0;
+                for (let i = 0; i < posts.length; i++) {
+                    const title = posts[i].getElementsByTagName('title')[0].textContent;
+                    const content = posts[i].getElementsByTagName('content')[0].textContent;
+                    const url = posts[i].getElementsByTagName('url')[0].textContent;
+                    if (title.toLowerCase().indexOf(keyword.toLowerCase()) > -1 || content.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+                        const randImg = Math.floor(Math.random() * 6) + 1;
+                        resultHtml += `
+                            <div class="post-card">
+                                <div class="card-img" style="background-image: url('/static/img/article/${randImg}.jpg')">
+                                    <a href="${url.startsWith('/') ? url : '/' + url}"><p>${content.substring(0, 66).replace(/<[^>]+>/g, '')}...</p></a>
+                                </div>
+                                <div class="card-info">
+                                    <h3 class="card-title"><a href="${url.startsWith('/') ? url : '/' + url}">${title}</a></h3>
+                                </div>
+                            </div>
+                        `;
+                        count++;
+                    }
+                }
+                if (count === 0) {
+                    resultsEl.innerHTML = '<p>没有找到相关文章...</p>';
+                } else {
+                    resultsEl.innerHTML = resultHtml;
+                    // 重新绑定 PJAX 到新生成的搜索结果链接
+                    if (typeof fantasy !== 'undefined' && fantasy.pjax) {
+                        fantasy.pjax.refresh(resultsEl);
+                    }
+                }
+            });
+    }
+
+    function initCustomScripts() {
+        applyRandomImages();
+        executeSearch();
+        const gitalkContainer = document.getElementById('gitalk-container');
+        if (gitalkContainer && typeof initGitalk === 'function') {
+            const gitalkId = gitalkContainer.getAttribute('data-gitalk-id');
+            if (gitalkId) initGitalk(gitalkId);
+        }
+        if (typeof loadRecentComments === 'function') loadRecentComments();
+    }
+
+    function loadRecentComments() {
+        
+        const list = document.getElementById('recent-comments-list');
+        if (!list || list.getAttribute('data-loaded')) return;
+        fetch('https://api.github.com/repos/madoka-me/madoka-me.github.io/issues/comments?sort=created&direction=desc&per_page=5', {
+            headers: { Accept: "application/vnd.github.v3+json" }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        })
+        .then(comments => {
+            if (!Array.isArray(comments) || comments.length === 0) {
+                list.innerHTML = '<a>暂无评论</a>';
+                list.setAttribute('data-loaded', 'true');
+                return;
+            }
+            let html = '';
+            comments.forEach(c => {
+                const rawText = (c.body || '').replace(/<[^>]+>/g, '').replace(/\n/g, ' ');
+                const text = rawText.length > 20 ? rawText.substring(0, 20) + '...' : rawText;
+                const avatar = c.user ? c.user.avatar_url : '';
+                const login = c.user ? c.user.login : '匿名';
+                const url = c.html_url || '#';
+                html += '<a href="' + url + '" target="_blank"><img src="' + avatar + '" />' + login + '：' + text + '</a>';
+            });
+            list.innerHTML = html;
+            list.setAttribute('data-loaded', 'true');
+        })
+        .catch(err => {
+            console.error('[Fantasy] loadRecentComments failed:', err);
+            list.innerHTML = '<a><i class="fa fa-exclamation-triangle"></i> 加载失败 (' + err.message + ')</a>';
+        });
+        
+    }
+
+    
+    function initGitalk(gitalkId) {
+        const container = document.getElementById('gitalk-container');
+        if (container) {
+            container.innerHTML = '';
+            var gitalk = new Gitalk({
+                clientID: 'Ov23lio8dJZpjAej9hVy',
+                clientSecret: '79ed716c9f7da52c9a167ba6a8f3254d75992068',
+                repo: 'madoka-me.github.io',
+                owner: 'madoka-me',
+                admin: ["madoka-me"],
+                id: md5(gitalkId),
+                distractionFreeMode: false
+            });
+            gitalk.render('gitalk-container');
+        }
+    }
+    
+
+    // Initial load
+    initCustomScripts();
+    
+    // PJAX load
+    document.addEventListener('pjax:complete', initCustomScripts);
+</script>
+</body>
+</html>
+          <div class="col-m-3">
                         
                             <h3>站点信息：</h3>
                             <ul class="clear">
