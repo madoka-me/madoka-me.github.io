@@ -982,8 +982,11 @@ footer h3{ color: #666 }
     text-overflow: ellipsis;
 }
 .foot-widget .foot-comments img{
+    width: 24px;
+    height: 24px;
     margin-right: .5em;
     border-radius: 66%;
+    vertical-align: middle;
 }
 
 .foot-copyright{

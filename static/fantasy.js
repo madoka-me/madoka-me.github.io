@@ -292,7 +292,7 @@ var Fantasy_Theme = function (config) {
     };
     this.init();
 
-    var pjax = new Pjax({
+    this.pjax = new Pjax({
         // 注意：搜索表单(form) 通常会导致跳转，如果 PJAX 处理重定向有问题，
         // 这里的 'form' 可能需要根据情况移除。
         // 但既然你之前解决了 PJAX 问题，这里保留你之前的设置。
